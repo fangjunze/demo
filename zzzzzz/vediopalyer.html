@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+<style type="text/css">
+	#div1{
+		
+		margin-top: 100px;
+	}
+</style>
+	<body>
+		<div id="div1" align="center">
+			<video id="vdoMain" src="video/trailer.mp4" 
+				width="640px" height="360px" controls="controls" 
+				onmouseout="v_move(0)" onmouseover="v_pause(1)"
+				onplaying="v_playing()" onpause="v_pause()"
+				onloadstart="v_loadstart();"
+				onended="v_ended();"
+				ontimeupdate="v_timeupdate(this)"
+				  poster="images/a0.jpg">
+				你的浏览器不支持视频
+			</video>
+			<p id="pTip">
+				<span id="spnPlayTip" class="spnL"></span>
+				<span id="spnTimeTip" class="spnR"></span>
+			</p>
+			<br />
+			<a href="index.html"><input type="button" value="返回上一页"  ></a>
+		<a href="index.html"><input type="button" value="返回主页" style="margin-left: 10px;" ></a>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+	function $$(id) {
+			return document.getElementById(id);
+		}
+	function v_move(v) {
+		$$("pTip").style.display =(v)?"block":"none";
+		
+	}
+	function v_loadstart() {
+		$$("spnPlayTip").innerHTML = "开始加载";
+		
+	}
+	function v_playing() {
+		$$("spnPlayTip").innerHTML = "正在播放";
+		
+	}
+	function v_pause() {
+		$$("spnPlayTip").innerHTML = "已经暂停";
+		
+	}
+	function v_ended() {
+		$$("spnPlayTip").innerHTML = "播放完成";
+		
+	}
+	
+		function v_timeupdate() {
+			var strCurTime =RuleTime(Math.floor(e.currentTime/60),2)+":"+
+			RuleTime(Math.floor(e.currentTime%60),2);
+			var strEndTime =RuleTime(Math.floor(e.duration/60),2)+":"+
+			RuleTime(Math.floor(e.duration%60),2);
+			$$("spnTimeTip").innerHTML = strCurTime+ "/" + strEndTime;
+			
+		}
+		function RuleTime() {
+			var len =num.toString().length;
+			while (len < n){
+				num = "0"+num;
+				len++;
+			}
+			return num;
+		}
+	</script>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+<form action="#" method="get">
+	<ul>
+		<li>
+			<label>用户名:　</label>
+			<input type="text" name="username" id="username" required="required" onblur="checkUser()" />
+			<span id="message1"></span>
+		</li>
+		<li>
+			<label>密　码:　</label>
+			<input type="password" name="password" id="password" required="required" onblur="checkPassword()" />
+			<span id="message2"></span>
+		</li>
+		<li>
+			<label>确认密码:</label>
+			<input type="password" name="passwordTwo" id="passwordTwo" required="required" onblur="checkPasswordTwo()" />
+			<span id="message3"></span>
+		</li>
+		<li>
+			<label>用户类型:</label>
+			<select name="userType">
+				<option value="0">管理员</option>
+				<option value="1">其他</option>
+			</select>
+		</li>
+		<li>
+			<label>性别:　　</label>
+			<input type="radio" name="sex" value="male" checked="checked" />男
+			<input type="radio" name="sex" value="female" />女
+		</li>
+		<li>
+			<label>兴趣爱好:</label>
+			<input type="checkbox" name="hobby" value="reading" />阅读
+			<input type="checkbox" name="hobby" value="music" />音乐
+			<input type="checkbox" name="hobby" value="sport" />运动
+		</li>
+		<li>
+			<label>电子邮件:</label>
+			<input type="email" name="email" id="email" value="" onblur="checkEmail()" />
+			<span id="message4"></span>
+		</li>
+		<li>
+			<label>自我介绍:</label>
+			<textarea name="intro" rows="5" cols="40"></textarea>
+		</li>
+		<li>
+			<input type="submit" id="sub" value="提交" onclick="return checkAll()" />
+			<input type="reset" value="重置" onclick="resetTheAll()" />
+		</li>
+	</ul>
+</form>
+<pre>
+	<p>一:正则表达式语法规则
+1:[abc]                a,b或者c任何一个
+
+2:[a-zA-Z]           a到z或A到Z任何一个
+
+3:\d                     表示数字[0-9]，即0到9任意一个
+
+4:X{n}                 表示有n个X
+
+5:X{n,}                表示有n个以上X
+
+6:X{n,m}             表示有n到m范围之内个X
+
+7:\D                    表示非数字
+
+8:\s                     表示空白字符（如空格，\t制表符，\n换行符）
+
+9:\S                    表示非空白字符
+
+10:\w                  表示单词字符：[a-zA-Z_0-9]
+
+11:\W                 表示非单词字符
+
+补充中文：[\u4e00-\u9fa5]
+
+二：正则的常用表达(/^$/)
+1：用户名只能为字母，长度为6-12位:[a-zA-Z]{6,12} 
+2：密码只能为数字，长度至少为6位:[0-9]{6,},\\d{6,} 
+3：手机号校验:[1][3578]\\d{9}
+4：邮箱校验: [a-zA-Z_ 0-9]{3,}@([a-zA-Z]+|\\d+)\.[a-zA-Z]+)+
+</p>
+</pre>
+
+
+
+	</body>
+	
+<script type="text/javascript">
+	function checkUser() {
+		var user = document.getElementById("username");
+		var regs = /^[a-zA-Z0-9\u4e00-\u9fa5_]{6,18}$/;
+		var message = document.getElementById("message1")
+		if(regs.test(user.value)) {
+			message.style.color = "greenyellow";
+			message.innerHTML = "✔";
+			return true;
+ 
+		} else {
+			message.style.color = "red";
+			message.innerHTML = "请输入6-18位中英文用户名！";
+			return false;
+		}
+	}
+ 
+	function checkPassword() {
+		var pass = document.getElementById("password");
+		var regs = /^[a-zA-Z0-9_]{6,12}$/;
+		var message = document.getElementById("message2")
+		if(regs.test(pass.value)) {
+			message.style.color = "greenyellow";
+			message.innerHTML = "✔";
+			return true;
+		} else {
+			message.style.color = "red";
+			message.innerHTML = "请输入6-12位中英文密码！";
+			return false;
+		}
+	}
+ 
+	function checkPasswordTwo() {
+		var pass1 = document.getElementById("password").value;
+		var pass2 = document.getElementById("passwordTwo").value;
+		var message = document.getElementById("message3")
+		if(pass1 == pass2 && pass2 != "") {
+			message.style.color = "greenyellow";
+			message.innerHTML = "✔";
+			return true;
+		} else {
+			message.style.color = "red";
+			message.innerHTML = "密码不一致";
+			return false;
+		}
+	}
+ 
+	function checkEmail() {
+		var reg = /\w+@\w+\.\w+/;
+		var email = document.getElementById("email").value;
+		var message = document.getElementById("message4");
+		if(reg.test(email)) {
+			message.style.color = "greenyellow";
+			message.innerHTML = "✔";
+			return true;
+		} else {
+			message.style.color = "red";
+			message.innerHTML = "邮箱格式错误，必须包含 @ 和 . ";
+			return false;
+		}
+	}
+	//提交所有
+	function checkAll() {
+		if(checkUser() && checkPassword() && checkPasswordTwo() && checkEmail()) {
+			return true;
+		} else {
+			alert("请完善信息")
+			return false;
+		}
+	}
+	//重置所有(当点击重新填写时 提交按钮 恢复不可用状态)
+	function resetTheAll() {
+		//清除提示信息
+		var spans = document.getElementsByTagName("span");
+		for(var i = 0; i < spans.length; i++) {
+			spans[i].innerHTML = "";
+		}
+ 
+	}
+</script>
+
+</html>
